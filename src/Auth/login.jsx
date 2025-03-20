@@ -34,9 +34,9 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full items-center justify-center  bg-gradient-to-r from-violet-900 to-blue-900">
+    <div className="font-poppins flex flex-col min-h-screen w-full items-center justify-center  bg-gradient-to-r from-violet-900 to-blue-900">
       <div className="w-full mb-5 max-w-sm mt-5 max-md:w-11/12 rounded p-6 bg-gradient-to-r from-violet-800 to-blue-800 shadow-lg">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-white">
+        <h2 className="mb-6 text-center text-2xl font-semibold font-kanit text-white">
           Login
         </h2>
         {error && <p className="mb-4 text-center font-bold text-red-500">{error}</p>}

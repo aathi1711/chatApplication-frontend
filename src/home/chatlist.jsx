@@ -5,13 +5,14 @@ import { profileContext } from "../context/profileContext";
 import axios from "axios";
 import { chatContext } from "../context/chatContext";
 import { userContext } from "../context/userContext";
+import UpdateTriggerContext from "../context/updateTrigger";
 
 const ChatList = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL;
   const [chats,setChats] = useState([])
-
+  const {updateTrigger} = useContext(UpdateTriggerContext)
   const {setChatId} = useContext(chatContext)
   const {setUser} = useContext(userContext)
   const {profile, setProfile} = useContext(profileContext)
@@ -27,6 +28,7 @@ const ChatList = () => {
     }
   }
   useEffect(()=>{
+      setUser(null)
       fetchChats()
   },[])
   const filteredChats = chats.filter((chat) =>
@@ -44,7 +46,7 @@ const ChatList = () => {
   }
   useEffect(()=>{
       fetchUserProfile()
-  },[])
+  },[updateTrigger])
   const formatTime = (timestamp) => {
     return new Date(timestamp).toLocaleTimeString("en-US", {
       hour: "numeric",
@@ -52,21 +54,28 @@ const ChatList = () => {
       hour12: true, 
     });
   };
-  const chatNavigate = (chatId,oppositeUser)=>{
-    if(window.innerWidth<=768){
-      setChatId(chatId)
-      setUser(oppositeUser)
-      navigate('/chatWindow')
-    }else{
-      setUser(oppositeUser)
-      setChatId(chatId)
+  const chatNavigate = async(chatId,oppositeUser)=>{
+    try {
+      await axios.put(`${apiUrl}/read`,{chatId},{
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      })
+      if(window.innerWidth<=768){
+        setChatId(chatId)
+        setUser(oppositeUser)
+        navigate('/chatWindow')
+      }else{
+        setUser(oppositeUser)
+        setChatId(chatId)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
   return (
-    <div className=" w-full text-white flex flex-col h-screen p-4">
+    <div className=" w-full text-white flex flex-col font-poppins h-screen p-4">
       {/* 📌 Chat List Header */}
       <div className="flex items-center justify-between pb-4 border-b border-gray-700">
-        <h1 className="text-xl font-bold">Chat App</h1>
+        <h1 className="text-xl font-bold font-kanit">Chat App</h1>
 
         {/* 🖼️ Profile Image (Visible Only in Mobile View) */}
         <img
@@ -78,7 +87,7 @@ const ChatList = () => {
       </div>
 
       {/* 🔍 Search Bar */}
-      <div className="flex items-center bg-violet-900 px-3 py-2 rounded mt-4">
+      <div className="flex items-center bg-violet-800 px-3 py-2 rounded mt-4">
         <Search size={20} className="text-gray-400" />
         <input
           type="text"
@@ -104,7 +113,8 @@ const ChatList = () => {
                 <div>
                 <h3 className="font-semibold">{chat.oppositeUser.name}</h3>
                 <div className="flex gap-2 items-center">
-                 {profile?._id == chat.lastMessage.sender && <CheckCheck size={20} className="opacity-70"/>}
+                 {profile?._id == chat.lastMessage.sender && !chat.lastMessage.isRead && <CheckCheck size={20} className="opacity-70"/>}
+                 {profile?._id == chat.lastMessage.sender && chat.lastMessage.isRead && <CheckCheck size={20} className="text-sky-400"/>}
                 <p className=" text-gray-400">{chat.lastMessage.content}</p>
                 </div>
                 
@@ -112,7 +122,7 @@ const ChatList = () => {
               </div>
               <div className="flex flex-col items-end gap-1">
                   <p className="text-sm">{formatTime(chat.lastMessage.createdAt)}</p>
-                  {profile?._id == chat.lastMessage.receiver && !chat.lastMessage.isRead && <p className="text-sm rounded-md bg-sky-500 w-fit px-1">new</p>}
+                  {profile?._id == chat.lastMessage.receiver && !chat.lastMessage.isRead && <p className="text-sm rounded-md bg-pink-500 w-fit px-1">new</p>}
               </div>
               </div>
             </div>

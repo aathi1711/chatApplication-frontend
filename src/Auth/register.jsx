@@ -43,9 +43,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full bg-gradient-to-r from-violet-900 to-blue-900  items-center justify-center ">
+    <div className="font-poppins flex flex-col min-h-screen w-full bg-gradient-to-r from-violet-900 to-blue-900  items-center justify-center ">
       <div className="w-full mb-5 max-w-sm mt-5 max-md:w-11/12 shadow-md rounded bg-gradient-to-r from-violet-800 to-blue-800 p-6 ">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-white">
+        <h2 className="mb-6 text-center text-2xl font-semibold font-kanit text-white">
           Create an Account
         </h2>
         {error && <p className="mb-4 text-center font-bold text-red-500">{error}</p>}

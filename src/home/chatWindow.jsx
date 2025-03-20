@@ -11,12 +11,15 @@ const socket = io(apiUrl);
 const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [loading,setLoading] = useState(false)
   const messagesEndRef = useRef(null);
  const {user,setUser} = useContext(userContext)
+ const currentTime = new Date().toISOString();
  const {profile} = useContext(profileContext)
  const {chatId} = useContext(chatContext)
  const navigate = useNavigate()
  const fetchMessages = async () => {
+  setLoading(true)
   try {
     const response = await axios.get(`${apiUrl}/message/${chatId}`,{
      headers: { Authorization: `${localStorage.getItem("token")}` },
@@ -25,17 +28,27 @@ const ChatWindow = () => {
     setMessages(data);
   } catch (error) {
     console.error("Error fetching messages:", error);
+  }finally{
+    setLoading(false)
   }
 };
  useEffect(() => {
-     fetchMessages();
-     console.log('component mount')
- }, [chatId]);
+  if(user){
+    console.log('component mount')
+    fetchMessages();
+  }
+ }, [user]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
   }, [messages]);
-   
+  const formatTime = (timestamp) => {
+    return new Date(timestamp).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true, 
+    });
+  };
   // Handle message send
   const sendMessage = async() => {
     const messageData = {
@@ -43,6 +56,7 @@ const ChatWindow = () => {
       receiver: user?._id,
       chatId,
       content: newMessage,
+      createdAt:currentTime
     };
 
     socket.emit("sendMessage", messageData);
@@ -71,38 +85,40 @@ const ChatWindow = () => {
   </div>;
 
   return (
-    <div className="flex flex-col h-full bg-gray-900 text-white">
+    <div className="flex flex-col h-full  text-white">
       {/* Header */}
-      <div className="flex items-center gap-4 p-3 bg-violet-950">
+      <div className="flex items-center gap-4 p-3  bg-violet-500 ">
         <button className="md:hidden" onClick={() => navigate('/')}>
           <ArrowLeft className="text-2xl" />
         </button>
         <img src={user?.profilePic} alt="Profile" className="w-10 h-10 rounded-full" />
-        <h2 className="text-lg font-semibold">{user.name}</h2>
+        <h2 className="text-lg font-semibold text-white font-kanit">{user.name}</h2>
       </div>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto bg-gradient-to-b from-violet-600 to-blue-800 p-4">
+      <div className="flex-1 overflow-y-auto bg-gray-200 font-poppins p-4">
+        {loading && <div className=" flex justify-center text-blue-500 font-semibold  w-full">
+          <p className="bg-white rounded p-1 w-fit italic">Loading...</p></div>}
         {messages.map((msg, index) => (
-          <div key={index} className={`flex ${msg.sender == profile._id ? "justify-end" : "justify-start"} mb-3`}>
-            <div className={`p-3 rounded-lg max-w-xs ${msg.sender === profile._id ? "bg-pink-700" : "bg-blue-500"}`}>
+          <div key={index} className={`flex ${msg.sender == profile._id ? "justify-end" : "justify-start"}  mb-3`}>
+            <div className={`p-3 rounded-lg max-w-xs ${msg.sender === profile._id ? "bg-white text-black" : "bg-violet-400"}`}>
               <p className="text-sm">{msg.content}</p>
-              <span className="text-xs text-gray-300">{msg.time}</span>
+              <span className="text-xs text-gray-300">{formatTime(msg.createdAt)}</span>
             </div>
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
       {/* Message Input */}
-      <div className="p-3 bg-blue-950 flex items-center gap-2">
+      <div className="p-3 bg-gray-200 flex items-center font-poppins gap-2">
         <input
           type="text"
-          className="flex-1 p-2 rounded-lg bg-blue-900 text-white outline-none"
+          className="flex-1 p-2 rounded-lg bg-gray-300 text-black outline-none"
           placeholder="Type a message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-       {newMessage && <button onClick={sendMessage} className="p-2 rounded-full bg-blue-500">
+       {newMessage && <button onClick={sendMessage} className="p-2 rounded-full bg-violet-500">
           <Send className="text-xl text-white" />
         </button>}
       </div>

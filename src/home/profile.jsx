@@ -3,42 +3,30 @@ import axios from "axios";
 import { LogOut, ArrowLeft, Camera } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { profileContext } from "../context/profileContext";
+import UpdateTriggerContext from "../context/updateTrigger";
 
 const Profile = () => {
-  const {profile} = useContext(profileContext)
-  console.log(profile)
-  const [loading, setLoading] = useState(false);
+  const {profile,setProfile} = useContext(profileContext)
   const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL;
+  const {updateTrigger,setUpdateTrigger} = useContext(UpdateTriggerContext)
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const formData = new FormData();
     formData.append("file", file);
-    setLoading(true);
     try {
        await axios.post(`${apiUrl}/set-profile`, formData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
+      setUpdateTrigger(updateTrigger+1)
     } catch (error) {
       console.error("Error uploading image:", error);
-    }
-    setLoading(false);
-  };
-
-  const handleNameChange = async () => {
-    if (!name.trim()) return;
-    try {
-      await axios.put("/api/users/update", { name }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-    } catch (error) {
-      console.error("Error updating name:", error);
     }
   };
 
   return (
-    <div className="w-full h-full p-6">
+    <div className="w-full h-full font-poppins p-6">
       {/* Header */}
       <div className="flex items-center text-white gap-3 mb-6">
         <button onClick={()=>navigate('/')}>
@@ -58,7 +46,7 @@ const Profile = () => {
 
       {/* User Details */}
       <div className="text-center">
-        <p className="text-gray-100 text-2xl mb-2">{profile?.name}</p>
+        <p className="text-gray-100 text-2xl font-kanit mb-2">{profile?.name}</p>
         <p className="text-gray-200">{profile?.email}</p>
       </div>
 

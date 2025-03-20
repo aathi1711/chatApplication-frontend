@@ -33,7 +33,7 @@ const SearchFriends = ({ onStartChat, onClose }) => {
     }
   }
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full font-poppins ">
       {/* Header */}
       <div className="flex items-center gap-3 p-4 bg-violet-800 text-white">
         <button onClick={()=>navigate('/')}>

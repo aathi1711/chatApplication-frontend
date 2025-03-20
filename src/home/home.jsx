@@ -10,12 +10,12 @@ const Home = () => {
 
   return (
     <div className="flex h-screen">
-        <div className="md:w-2/4 w-full bg-gradient-to-b from-violet-900 to-blue-900 ">
+        <div className="md:w-2/4 w-full bg-violet-600 ">
            <Outlet/>
       </div>
       {/* Chat Window (Shows only when chat is selected) */}
       <div className={`md:w-full w-full hidden md:block `}>
-        <ChatWindow  />
+        <ChatWindow/>
       </div>  
     </div>
   );
