@@ -24,7 +24,10 @@ const Profile = () => {
       console.error("Error uploading image:", error);
     }
   };
-
+  const logout = ()=>{
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   return (
     <div className="w-full h-full font-poppins p-6">
       {/* Header */}
@@ -52,7 +55,7 @@ const Profile = () => {
 
       {/* Logout Button */}
       <button
-        onClick={()=>navigate('/login')}
+        onClick={logout}
         className="mt-6 w-full p-3 bg-violet-800 text-white rounded hover:bg-violet-900 flex items-center justify-center gap-2"
       >
         <LogOut size={18} /> Logout

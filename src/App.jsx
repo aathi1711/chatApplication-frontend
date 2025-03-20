@@ -7,6 +7,7 @@ import ChatList from "./home/chatlist"
 import SearchFriends from "./home/searchFriends"
 import Profile from "./home/profile"
 import ChatWindow from "./home/chatWindow"
+import ProtectedRoute from "./Auth/protectRoute"
 
 function App() {
  
@@ -17,7 +18,7 @@ function App() {
           <Route path='/signup' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/verify-email/:token' element={<VerifyEmail/>}/>
-          <Route path="/" element={<Home/>}>
+          <Route path="/" element={<ProtectedRoute component={<Home/>}/> }>
           <Route index element={<ChatList/>}/>
           <Route path="search-friends" element={<SearchFriends/>}/>
           <Route path="profile" element={<Profile/>}/>

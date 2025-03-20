@@ -16,7 +16,7 @@ const ChatWindow = () => {
   const {user,setUser} = useContext(userContext)
   const currentTime = new Date().toISOString();
   const {profile} = useContext(profileContext)
-  const {chatId} = useContext(chatContext)
+  const {chatId,setChatId} = useContext(chatContext)
   const navigate = useNavigate()
   const fetchMessages = async () => {
   setLoading(true)
@@ -34,7 +34,6 @@ const ChatWindow = () => {
 };
  useEffect(() => {
   if(user){
-    console.log('component mount')
     fetchMessages();
   }
  }, [user]);
@@ -63,9 +62,11 @@ const ChatWindow = () => {
     setMessages((prev) => [...prev, messageData]);
     setNewMessage("");
     try {
-      await  axios.post(`${apiUrl}/send`,messageData, {
+     const {data} =  await  axios.post(`${apiUrl}/send`,messageData, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       })
+      setChatId(data.chatId)
+      console.log(chatId)
     } catch (error) {
       console.log('error occured',error)
     }
@@ -79,15 +80,15 @@ const ChatWindow = () => {
     
    }, [socket]);
 
-  if (!user) return <div className="hidden md:flex w-full flex-col items-center justify-center h-screen bg-gradient-to-b from-violet-600 to-blue-800 p-4">
+  if (!user) return <div className="hidden md:flex w-full flex-col items-center justify-center h-screen bg-gray-200 p-4">
     <img src="https://cdn-icons-png.flaticon.com/128/3845/3845696.png"/>
-     <h1 className="text-4xl text-white font-bold">Start chat with your Friends</h1>
+     <h1 className="text-4xl text-blue-500 font-bold">Start chat with your Friends</h1>
   </div>;
 
   return (
-    <div className="flex flex-col h-full  text-white">
+    <div className="flex flex-col h-full md:w-full text-white">
       {/* Header */}
-      <div className="flex items-center gap-4 h-16 fixed top-0 w-full bg-violet-500 ">
+      <div className="flex items-center  gap-4 h-16 fixed top-0 w-full bg-violet-500 ">
         <button className="md:hidden" onClick={() => navigate('/')}>
           <ArrowLeft className="text-2xl" />
         </button>
@@ -95,7 +96,7 @@ const ChatWindow = () => {
         <h2 className="text-lg font-semibold text-white font-kanit">{user.name}</h2>
       </div>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto mt-16 bg-gray-200 font-poppins p-4">
+      <div className="flex-1 overflow-y-auto md:w-full mt-16 bg-gray-200 font-poppins p-4">
         {loading && <div className=" flex justify-center text-blue-500 font-semibold  w-full">
           <p className="bg-white rounded p-1 w-fit italic">Loading...</p></div>}
         {messages.map((msg, index) => (
@@ -109,7 +110,7 @@ const ChatWindow = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Message Input */}
-      <div className="p-3 max-md:p-1 bg-gray-200 flex items-center font-poppins gap-2">
+      <div className="p-3 max-md:p-1 bg-gray-200 md:w-full flex items-center font-poppins gap-2">
         <input
           type="text"
           className="flex-1 p-2 rounded-lg bg-gray-300 text-black outline-none"
@@ -118,9 +119,9 @@ const ChatWindow = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-       {newMessage && <button onClick={sendMessage} className="p-2 rounded-full bg-violet-500">
+      <button onClick={sendMessage} disabled={!newMessage} className="p-2 disabled:opacity-50 rounded-full bg-violet-500">
           <Send className="text-xl text-white" />
-        </button>}
+        </button>
       </div>
     </div>
   );
