@@ -99,7 +99,7 @@ const ChatList = () => {
       </div>
 
       {/* 📜 Chat List */}
-      <div className="mt-4 flex-1 overflow-y-auto">
+      <div className="mt-4 flex-1  overflow-y-auto">
         {filteredChats.length > 0 ? (
           filteredChats.map((chat) => (
             <div

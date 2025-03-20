@@ -7,18 +7,18 @@ import { profileContext } from "../context/profileContext";
 import axios from "axios";
 import { chatContext } from "../context/chatContext";
 const apiUrl = import.meta.env.VITE_API_URL;
-const socket = io(apiUrl);
+const socket = io(apiUrl,{withCredentials:true});
 const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading,setLoading] = useState(false)
   const messagesEndRef = useRef(null);
- const {user,setUser} = useContext(userContext)
- const currentTime = new Date().toISOString();
- const {profile} = useContext(profileContext)
- const {chatId} = useContext(chatContext)
- const navigate = useNavigate()
- const fetchMessages = async () => {
+  const {user,setUser} = useContext(userContext)
+  const currentTime = new Date().toISOString();
+  const {profile} = useContext(profileContext)
+  const {chatId} = useContext(chatContext)
+  const navigate = useNavigate()
+  const fetchMessages = async () => {
   setLoading(true)
   try {
     const response = await axios.get(`${apiUrl}/message/${chatId}`,{
