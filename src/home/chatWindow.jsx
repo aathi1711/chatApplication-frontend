@@ -87,7 +87,7 @@ const ChatWindow = () => {
   return (
     <div className="flex flex-col h-full  text-white">
       {/* Header */}
-      <div className="flex items-center gap-4 p-3  bg-violet-500 ">
+      <div className="flex items-center gap-4 h-16 fixed top-0 w-full bg-violet-500 ">
         <button className="md:hidden" onClick={() => navigate('/')}>
           <ArrowLeft className="text-2xl" />
         </button>
@@ -95,7 +95,7 @@ const ChatWindow = () => {
         <h2 className="text-lg font-semibold text-white font-kanit">{user.name}</h2>
       </div>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto bg-gray-200 font-poppins p-4">
+      <div className="flex-1 overflow-y-auto mt-16 bg-gray-200 font-poppins p-4">
         {loading && <div className=" flex justify-center text-blue-500 font-semibold  w-full">
           <p className="bg-white rounded p-1 w-fit italic">Loading...</p></div>}
         {messages.map((msg, index) => (
@@ -109,7 +109,7 @@ const ChatWindow = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Message Input */}
-      <div className="p-3 bg-gray-200 flex items-center font-poppins gap-2">
+      <div className="p-3 max-md:p-1 bg-gray-200 flex items-center font-poppins gap-2">
         <input
           type="text"
           className="flex-1 p-2 rounded-lg bg-gray-300 text-black outline-none"
