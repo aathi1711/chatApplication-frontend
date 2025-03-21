@@ -43,13 +43,13 @@ const Register = () => {
   };
 
   return (
-    <div className="font-poppins flex flex-col min-h-screen w-full bg-gradient-to-r from-violet-900 to-blue-900  items-center justify-center ">
-      <div className="w-full mb-5 max-w-sm mt-5 max-md:w-11/12 shadow-md rounded bg-gradient-to-r from-violet-800 to-blue-800 p-6 ">
-        <h2 className="mb-6 text-center text-2xl font-semibold font-kanit text-white">
+    <div className="font-poppins flex flex-col min-h-screen w-full bg-gradient-to-br from-violet-500 to-gray-200  items-center justify-center ">
+      <div className="w-full mb-5 max-w-sm mt-5 max-md:w-11/12 shadow-md rounded bg-white p-6 ">
+        <h2 className="mb-6 text-center text-2xl font-semibold font-kanit text-violet-600">
           Create an Account
         </h2>
         {error && <p className="mb-4 text-center font-bold text-red-500">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4 text-white">
+        <form onSubmit={handleSubmit} className="space-y-4 text-gray-600">
           <div> 
             <input
               type="text"
@@ -100,14 +100,14 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full rounded  p-2 text-white bg-sky-500 disabled:opacity-50"
+            className="w-full rounded  p-2 text-white bg-violet-600 disabled:opacity-50"
             disabled={loading}
           >
             {loading ? "Registering..." : "Signup"}
           </button>
         </form>
 
-        <p className=" text-center text-gray-200">
+        <p className=" text-center text-gray-500">
           Already have an account?{" "}
           <Link to="/login" className=" hover:underline">
             Login

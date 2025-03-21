@@ -1,14 +1,8 @@
-
-import { useContext, useEffect } from "react";
 import ChatWindow from "./chatWindow";
 import { Outlet } from "react-router-dom";
-import { profileContext } from "../context/profileContext";
-import axios from "axios";
 
 const Home = () => {
-    
-
-  return (
+    return (
     <div className="flex h-screen">
         <div className="md:w-2/4 w-full bg-violet-600 ">
            <Outlet/>

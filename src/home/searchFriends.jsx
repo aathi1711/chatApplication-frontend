@@ -4,7 +4,7 @@ import { Search, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
 
-const SearchFriends = ({ onStartChat, onClose }) => {
+const SearchFriends = () => {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -74,7 +74,7 @@ const SearchFriends = ({ onStartChat, onClose }) => {
             onClick={()=>chatNavigate(user)}
           >
             <img
-              src={user.profilePic || "/default-avatar.png"}
+              src={user.profilePic || "https://cdn-icons-png.flaticon.com/128/847/847969.png"}
               alt={user.name}
               className="w-10 h-10 rounded-full"
             />

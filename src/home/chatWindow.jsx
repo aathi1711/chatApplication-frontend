@@ -92,7 +92,7 @@ const ChatWindow = () => {
         <button className="md:hidden" onClick={() => navigate('/')}>
           <ArrowLeft className="text-2xl" />
         </button>
-        <img src={user?.profilePic} alt="Profile" className="w-10 h-10 rounded-full" />
+        <img src={user?.profilePic ? user.profilePic :  'https://cdn-icons-png.flaticon.com/128/847/847969.png'} alt="Profile" className="w-10 h-10 rounded-full" />
         <h2 className="text-lg font-semibold text-white font-kanit">{user.name}</h2>
       </div>
       {/* Messages */}

@@ -32,7 +32,7 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen  bg-gradient-to-r from-violet-900 to-blue-900  px-4">
+    <div className="flex items-center justify-center min-h-screen  bg-gradient-to-br from-violet-500 to-gray-200   px-4">
       <div className="bg-white p-6 md:p-8 shadow-lg rounded-xl text-center max-w-md w-full">
         {status === "loading" && <p className="text-lg font-medium">Verifying...</p>}
 

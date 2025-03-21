@@ -79,7 +79,7 @@ const ChatList = () => {
 
         {/* 🖼️ Profile Image (Visible Only in Mobile View) */}
         <img
-          src={profile ? profile.profilePic :'/profile.img'}
+          src={profile.profilePic ? profile.profilePic : 'https://cdn-icons-png.flaticon.com/128/847/847969.png'}
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover cursor-pointer"
           onClick={()=>navigate('/profile')}
@@ -109,13 +109,13 @@ const ChatList = () => {
             >
               <div className="flex justify-between">
               <div className="flex gap-5">
-                <img src={chat.oppositeUser.profilePic} className="w-10 h-10 rounded-full object-cover"/>
+                <img src={chat.oppositeUser.profilePic ? chat.oppositeUser.profilePic :'https://cdn-icons-png.flaticon.com/128/847/847969.png'} className="w-10 h-10 rounded-full object-cover"/>
                 <div>
                 <h3 className="font-semibold">{chat.oppositeUser.name}</h3>
                 <div className="flex gap-2 items-center">
                  {profile?._id == chat.lastMessage.sender && !chat.lastMessage.isRead && <CheckCheck size={20} className="opacity-70"/>}
                  {profile?._id == chat.lastMessage.sender && chat.lastMessage.isRead && <CheckCheck size={20} className="text-sky-400"/>}
-                <p className=" text-gray-400">{chat.lastMessage.content}</p>
+                <p className=" text-gray-200">{chat.lastMessage.content}</p>
                 </div>
                 
                 </div>

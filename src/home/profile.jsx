@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import axios from "axios";
 import { LogOut, ArrowLeft, Camera } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,7 @@ import { profileContext } from "../context/profileContext";
 import UpdateTriggerContext from "../context/updateTrigger";
 
 const Profile = () => {
-  const {profile,setProfile} = useContext(profileContext)
+  const {profile} = useContext(profileContext)
   const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL;
   const {updateTrigger,setUpdateTrigger} = useContext(UpdateTriggerContext)
@@ -40,13 +40,12 @@ const Profile = () => {
 
       {/* Profile Picture */}
       <div className="relative w-24 h-24 mx-auto mb-4">
-        <img src={profile?.profilePic} alt="Profile" className="w-full h-full object-cover rounded-full border" />
+        <img src={profile.profilePic ? profile.profilePic : 'https://cdn-icons-png.flaticon.com/128/847/847969.png' } alt="Profile" className="w-full h-full object-cover rounded-full border" />
         <label className="absolute bottom-1 right-1 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
           <Camera size={16} />
           <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
         </label>
       </div>
-
       {/* User Details */}
       <div className="text-center">
         <p className="text-gray-100 text-2xl font-kanit mb-2">{profile?.name}</p>
