@@ -79,7 +79,7 @@ const ChatList = () => {
 
         {/* 🖼️ Profile Image (Visible Only in Mobile View) */}
         <img
-          src={profile.profilePic ? profile.profilePic : 'https://cdn-icons-png.flaticon.com/128/847/847969.png'}
+          src={profile?.profilePic || "https://cdn-icons-png.flaticon.com/128/847/847969.png"}
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover cursor-pointer"
           onClick={()=>navigate('/profile')}

@@ -40,7 +40,7 @@ const Profile = () => {
 
       {/* Profile Picture */}
       <div className="relative w-24 h-24 mx-auto mb-4">
-        <img src={profile.profilePic ? profile.profilePic : 'https://cdn-icons-png.flaticon.com/128/847/847969.png' } alt="Profile" className="w-full h-full object-cover rounded-full border" />
+        <img src={profile?.profilePic || "https://cdn-icons-png.flaticon.com/128/847/847969.png"} alt="Profile" className="w-full h-full object-cover rounded-full border" />
         <label className="absolute bottom-1 right-1 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
           <Camera size={16} />
           <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
