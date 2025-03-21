@@ -96,7 +96,7 @@ const ChatWindow = () => {
         <h2 className="text-lg font-semibold text-white font-kanit">{user.name}</h2>
       </div>
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto md:w-full mt-16 bg-gray-200 font-poppins p-4">
+      <div className="flex-1  overflow-y-auto md:w-full mt-16 mb-12 bg-gray-200 font-poppins p-4">
         {loading && <div className=" flex justify-center text-blue-500 font-semibold  w-full">
           <p className="bg-white rounded p-1 w-fit italic">Loading...</p></div>}
         {messages.map((msg, index) => (
@@ -110,7 +110,7 @@ const ChatWindow = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Message Input */}
-      <div className="p-3 max-md:p-1 bg-gray-200 md:w-full flex items-center font-poppins gap-2">
+      <div className="h-16  max-md:p-1 bg-gray-200 w-full flex items-center  fixed bottom-0  font-poppins gap-2">
         <input
           type="text"
           className="flex-1 p-2 rounded-lg bg-gray-300 text-black outline-none"

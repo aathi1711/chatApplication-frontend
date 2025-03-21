@@ -14,7 +14,7 @@ const Home = () => {
            <Outlet/>
       </div>
       {/* Chat Window (Shows only when chat is selected) */}
-      <div className={`md:w-full w-full hidden md:block `}>
+      <div className={` w-full hidden md:block `}>
         <ChatWindow/>
       </div>  
     </div>
